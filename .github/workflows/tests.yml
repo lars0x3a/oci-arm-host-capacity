@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         php-versions: ['8.2']
-    name: Oracle (PHP ${{ matrix.php-versions }})
+    name: OracleS (PHP ${{ matrix.php-versions }})
     steps:
       - uses: actions/checkout@v1
       - name: Install PHP

@@ -98,6 +98,7 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
         echo "$message\n";
             if ($notifier->isSupported()) {
                $notifier->notify($message);
+               $notifier->notify("=======");
             }
 
         if (

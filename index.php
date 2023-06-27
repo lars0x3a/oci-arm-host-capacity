@@ -97,7 +97,7 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
         $message = $e->getMessage();
         $code = $e->getCode();
         echo "Code: $code\n";
-        echo "Message: $message";
+        echo "$message";
             if ($notifier->isSupported()) {
                $notifier->notify($message);
             }

@@ -101,8 +101,8 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
         echo "$message";
         if ($notifier->isSupported()) {
             $execution_time = microtime(true) - $time_start;
-            $execution_time_formatted = number_format($execution_time, 2);
-            $fullMessage = "Code: $code\nMessage: $message\nTime: $execution_time_formatted s";
+            $execution_time_formatted = number_format($execution_time, 2) . 's';
+            $fullMessage = "Code: $code\nMessage: $message\nExecutionTime: $execution_time_formatted s";
             //$notifier->notify($message);
             $notifier->notify($fullMessage);
         }
@@ -126,8 +126,8 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
     echo "$message\n";
     if ($notifier->isSupported()) {
         $execution_time = microtime(true) - $time_start;
-        $execution_time_formatted = number_format($execution_time, 2);
-        $fullMessage1 = "Code: $code\nMessage: $message\nTime: $execution_time_formatted s";
+        $execution_time_formatted = number_format($execution_time, 2) . 's';
+        $fullMessage1 = "Code: $code\nMessage: $message\nExecutionTime: $execution_time_formatted";
         $notifier->notify($fullMessage1);
     }
 

@@ -102,7 +102,7 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
         if ($notifier->isSupported()) {
             $execution_time = microtime(true) - $time_start;
             $execution_time_formatted = number_format($execution_time, 2) . 's';
-            $fullMessage = "Code: $code\nMessage: $message\nExecutionTime: $execution_time_formatted s";
+            $fullMessage = "Code: $code\nMessage: $message\nExecutionTime: $execution_time_formatted";
             //$notifier->notify($message);
             $notifier->notify($fullMessage);
         }

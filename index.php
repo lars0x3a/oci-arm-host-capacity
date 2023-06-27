@@ -95,10 +95,11 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
         $instanceDetails = $api->createInstance($config, $shape, getenv('OCI_SSH_PUBLIC_KEY'), $availabilityDomain);
     } catch(ApiCallException $e) {
         $message = $e->getMessage();
-        echo "$message\n";
+        $code = $e->getCode();
+        echo "Code: $code\n";
+        echo "Message: $message";
             if ($notifier->isSupported()) {
                $notifier->notify($message);
-               $notifier->notify("=======");
             }
 
         if (

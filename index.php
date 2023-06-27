@@ -91,7 +91,7 @@ if (!empty($config->availabilityDomains)) {
 
 foreach ($availabilityDomains as $availabilityDomainEntity) {
     $availabilityDomain = is_array($availabilityDomainEntity) ? $availabilityDomainEntity['name'] : $availabilityDomainEntity;
-    $time_start = microtime(true); 
+    $time_start = microtime(true);
     try {
         $instanceDetails = $api->createInstance($config, $shape, getenv('OCI_SSH_PUBLIC_KEY'), $availabilityDomain);
     } catch(ApiCallException $e) {
@@ -99,11 +99,11 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
         $code = $e->getCode();
         //echo "Code: $code\n";
         echo "$message";
-        $fullMessage = "Code: $code\nMessage: $message\nTime: '.$execution_time.'ms";
-            if ($notifier->isSupported()) {
-               //$notifier->notify($message);
-               $notifier->notify($fullMessage);
-            }
+        if ($notifier->isSupported()) {
+            $fullMessage = "Code: $code\nMessage: $message\nTime: '.(($time_end - $time_start) / 60).'ms";
+            //$notifier->notify($message);
+            $notifier->notify($fullMessage);
+        }
 
         if (
             $e->getCode() === 500 &&
@@ -114,10 +114,8 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
             $time_end = microtime(true);
             sleep(10);
             continue;
-            
         }
 
-        $execution_time = ($time_end - $time_start)/60;
         // current config is broken
         return;
     }
@@ -125,8 +123,8 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
     // success
     $message = json_encode($instanceDetails, JSON_PRETTY_PRINT);
     echo "$message\n";
-    $fullMessage1 = "Code: $code\nMessage: $message\nTime: '.$execution_time.'ms";
     if ($notifier->isSupported()) {
+        $fullMessage1 = "Code: $code\nMessage: $message\nTime: '.(($time_end - $time_start) / 60).'ms";
         $notifier->notify($fullMessage1);
     }
 

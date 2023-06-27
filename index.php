@@ -100,7 +100,7 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
         //echo "Code: $code\n";
         echo "$message";
         if ($notifier->isSupported()) {
-            $fullMessage = "Code: $code\nMessage: $message\nTime: '.(($time_end - $time_start) / 60).'ms";
+            $fullMessage = "Code: $code\nMessage: $message\nTime: " . ((microtime(true) - $time_start) / 1000) . "s";
             //$notifier->notify($message);
             $notifier->notify($fullMessage);
         }
@@ -111,8 +111,7 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
             strpos($message, 'Out of host capacity') !== false
         ) {
             // trying next availability domain
-            $time_end = microtime(true);
-            sleep(10);
+            sleep(16);
             continue;
         }
 
@@ -124,7 +123,7 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
     $message = json_encode($instanceDetails, JSON_PRETTY_PRINT);
     echo "$message\n";
     if ($notifier->isSupported()) {
-        $fullMessage1 = "Code: $code\nMessage: $message\nTime: '.(($time_end - $time_start) / 60).'ms";
+        $fullMessage1 = "Code: $code\nMessage: $message\nTime: " . ((microtime(true) - $time_start) / 1000) . "s";
         $notifier->notify($fullMessage1);
     }
 

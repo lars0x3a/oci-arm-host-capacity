@@ -91,15 +91,17 @@ if (!empty($config->availabilityDomains)) {
 
 foreach ($availabilityDomains as $availabilityDomainEntity) {
     $availabilityDomain = is_array($availabilityDomainEntity) ? $availabilityDomainEntity['name'] : $availabilityDomainEntity;
+    $time_start = microtime(true); 
     try {
         $instanceDetails = $api->createInstance($config, $shape, getenv('OCI_SSH_PUBLIC_KEY'), $availabilityDomain);
     } catch(ApiCallException $e) {
         $message = $e->getMessage();
         $code = $e->getCode();
-        echo "Code: $code\n";
+        //echo "Code: $code\n";
         echo "$message";
-        $fullMessage = "Code: $code\nMessage: $message"
+        $fullMessage = "Code: $code\nMessage: $message\nTime: '.$execution_time.'ms";
             if ($notifier->isSupported()) {
+               //$notifier->notify($message);
                $notifier->notify($fullMessage);
             }
 
@@ -109,10 +111,13 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
             strpos($message, 'Out of host capacity') !== false
         ) {
             // trying next availability domain
+            $time_end = microtime(true);
             sleep(10);
             continue;
+            
         }
 
+        $execution_time = ($time_end - $time_start)/60;
         // current config is broken
         return;
     }
@@ -120,8 +125,9 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
     // success
     $message = json_encode($instanceDetails, JSON_PRETTY_PRINT);
     echo "$message\n";
+    $fullMessage1 = "Code: $code\nMessage: $message\nTime: '.$execution_time.'ms";
     if ($notifier->isSupported()) {
-        $notifier->notify($message);
+        $notifier->notify($fullMessage1);
     }
 
     return;

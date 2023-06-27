@@ -96,9 +96,9 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
     } catch(ApiCallException $e) {
         $message = $e->getMessage();
         echo "$message\n";
-//            if ($notifier->isSupported()) {
-//                $notifier->notify($message);
-//            }
+            if ($notifier->isSupported()) {
+               $notifier->notify($message);
+            }
 
         if (
             $e->getCode() === 500 &&
@@ -106,7 +106,7 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
             strpos($message, 'Out of host capacity') !== false
         ) {
             // trying next availability domain
-            sleep(16);
+            sleep(10);
             continue;
         }
 

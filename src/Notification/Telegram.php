@@ -22,11 +22,9 @@ class Telegram implements NotifierInterface
     {
         $apiKey = getenv('TELEGRAM_BOT_API_KEY');
         $telegramUserId = getenv('TELEGRAM_USER_ID');
-
-        $text = "Code: $code\nMessage: $message";
-
+        
         $body = http_build_query([
-            'text' => $text,
+            'text' => $message,
             'chat_id' => $telegramUserId,
         ]);
 

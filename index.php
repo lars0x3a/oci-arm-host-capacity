@@ -102,7 +102,7 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
 
         //Modified to prevent spam over TG
         //Send message only if not HTTP Code is 500 or 429
-        if ($e->getCode() != 500 || $e->getCode() != 429)
+        if ($e->getCode() != 500 && $e->getCode() != 429)
         {
             if ($notifier->isSupported()) {
                 $execution_time = microtime(true) - $time_start;

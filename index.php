@@ -99,12 +99,17 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
         $code = $e->getCode();
         //echo "Code: $code\n";
         echo "$message";
-        if ($notifier->isSupported()) {
-            $execution_time = microtime(true) - $time_start;
-            $execution_time_formatted = number_format($execution_time, 2) . 's';
-            $fullMessage = "Code: $code\nMessage: $message\nExecutionTime: $execution_time_formatted";
-            //$notifier->notify($message);
-            $notifier->notify($fullMessage);
+
+        //Modified to prevent spam over TG
+        //Send message only if not HTTP Code is 500 or 429
+        if $e->getCode() != 500 || $e->getCode() != 429 {
+            if ($notifier->isSupported()) {
+                $execution_time = microtime(true) - $time_start;
+                $execution_time_formatted = number_format($execution_time, 2) . 's';
+                $fullMessage = "Code: $code\nMessage: $message\nExecutionTime: $execution_time_formatted";
+                //$notifier->notify($message);
+                $notifier->notify($fullMessage);
+            }
         }
 
         if (

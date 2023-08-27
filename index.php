@@ -91,27 +91,14 @@ if (!empty($config->availabilityDomains)) {
 
 foreach ($availabilityDomains as $availabilityDomainEntity) {
     $availabilityDomain = is_array($availabilityDomainEntity) ? $availabilityDomainEntity['name'] : $availabilityDomainEntity;
-    $time_start = microtime(true);
     try {
         $instanceDetails = $api->createInstance($config, $shape, getenv('OCI_SSH_PUBLIC_KEY'), $availabilityDomain);
     } catch(ApiCallException $e) {
         $message = $e->getMessage();
-        $code = $e->getCode();
-        //echo "Code: $code\n";
-        echo "$message";
-
-        //Modified to prevent spam over TG
-        //Send message only if not HTTP Code is 500 or 429
-        if ($e->getCode() != 500 && $e->getCode() != 429)
-        {
-            if ($notifier->isSupported()) {
-                $execution_time = microtime(true) - $time_start;
-                $execution_time_formatted = number_format($execution_time, 2) . 's';
-                $fullMessage = "Code: $code\nMessage: $message\nExecutionTime: $execution_time_formatted";
-                //$notifier->notify($message);
-                $notifier->notify($fullMessage);
-            }
-        }
+        echo "$message\n";
+//            if ($notifier->isSupported()) {
+//                $notifier->notify($message);
+//            }
 
         if (
             $e->getCode() === 500 &&
@@ -119,7 +106,7 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
             strpos($message, 'Out of host capacity') !== false
         ) {
             // trying next availability domain
-            sleep(30);
+            sleep(16);
             continue;
         }
 
@@ -131,10 +118,7 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
     $message = json_encode($instanceDetails, JSON_PRETTY_PRINT);
     echo "$message\n";
     if ($notifier->isSupported()) {
-        $execution_time = microtime(true) - $time_start;
-        $execution_time_formatted = number_format($execution_time, 2) . 's';
-        $fullMessage1 = "Code: $code\nMessage: $message\nExecutionTime: $execution_time_formatted";
-        $notifier->notify($fullMessage1);
+        $notifier->notify($message);
     }
 
     return;

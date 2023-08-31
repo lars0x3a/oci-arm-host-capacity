@@ -109,6 +109,10 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
             // trying next availability domain
             sleep(16);
             continue;
+        } elseif (strpos($message, 'TooManyRequest') !== false) {
+            echo "Too many requests. Adding a 10-second delay before continuing...\n";
+            sleep(10);
+            continue;
         }
 
         // current config is broken

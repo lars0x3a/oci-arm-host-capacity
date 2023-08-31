@@ -111,7 +111,7 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
             continue;
         } elseif (strpos($message, 'TooManyRequest') !== false) {
             echo "Too many requests. Adding a 10-second delay before continuing...\n";
-            sleep(16);
+            sleep(30);
             continue;
         }
 

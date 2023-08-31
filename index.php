@@ -9,6 +9,7 @@ require "{$pathPrefix}vendor/autoload.php";
 
 use Dotenv\Dotenv;
 use Hitrov\Exception\ApiCallException;
+use Hitrov\Exception\TooManyRequestsWaiterException;
 use Hitrov\FileCache;
 use Hitrov\OciApi;
 use Hitrov\OciConfig;
@@ -89,7 +90,6 @@ if (!empty($config->availabilityDomains)) {
     $availabilityDomains = $api->getAvailabilityDomains($config);
 }
 
-sleep(10);
 foreach ($availabilityDomains as $availabilityDomainEntity) {
     $availabilityDomain = is_array($availabilityDomainEntity) ? $availabilityDomainEntity['name'] : $availabilityDomainEntity;
     try {
@@ -107,11 +107,14 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
             strpos($message, 'Out of host capacity') !== false
         ) {
             // trying next availability domain
-            sleep(20);
+            sleep(16);
             continue;
         }
 
         // current config is broken
+        return;
+    } catch(TooManyRequestsWaiterException $e) {
+        echo $e->getMessage();
         return;
     }
 

@@ -40,45 +40,40 @@ jobs:
       - name: Install dependencies
         run: |
           composer update --prefer-dist --no-progress
+      - name: Echo ENV values
+        run: |
+          echo "OCI_REGION: $OCI_REGION"
+          echo "OCI_USER_ID: $OCI_USER_ID"
+          echo "OCI_TENANCY_ID: $OCI_TENANCY_ID"
+          echo "OCI_KEY_FINGERPRINT: $OCI_KEY_FINGERPRINT"
+          echo "OCI_PRIVATE_KEY_FILENAME: $OCI_PRIVATE_KEY_FILENAME"
+          echo "OCI_AVAILABILITY_DOMAIN: $OCI_AVAILABILITY_DOMAIN"
+          echo "OCI_SUBNET_ID: $OCI_SUBNET_ID"
+          echo "OCI_IMAGE_ID: $OCI_IMAGE_ID"
+          echo "OCI_OCPUS: $OCI_OCPUS"
+          echo "OCI_MEMORY_IN_GBS: $OCI_MEMORY_IN_GBS"
+          echo "OCI_SHAPE: $OCI_SHAPE"
+          echo "OCI_MAX_INSTANCES: $OCI_MAX_INSTANCES"
+          echo "OCI_SSH_PUBLIC_KEY: $OCI_SSH_PUBLIC_KEY"
+          echo "TELEGRAM_USER_ID: $TELEGRAM_USER_ID"
+          echo "TELEGRAM_BOT_API_KEY: $TELEGRAM_BOT_API_KEY"
+        env:
+          OCI_REGION: ${{ secrets.OCI_REGION }}
+          OCI_USER_ID: ${{ secrets.OCI_USER_ID }}
+          OCI_TENANCY_ID: ${{ secrets.OCI_TENANCY_ID }}
+          OCI_KEY_FINGERPRINT: ${{ secrets.OCI_KEY_FINGERPRINT }}
+          OCI_PRIVATE_KEY_FILENAME: ${{ secrets.OCI_PRIVATE_KEY_FILENAME }}
+          OCI_AVAILABILITY_DOMAIN: ${{ secrets.OCI_AVAILABILITY_DOMAIN }}
+          OCI_SUBNET_ID: ${{ secrets.OCI_SUBNET_ID }}
+          OCI_IMAGE_ID: ${{ secrets.OCI_IMAGE_ID }}
+          OCI_OCPUS: ${{ secrets.OCI_OCPUS }}
+          OCI_MEMORY_IN_GBS: ${{ secrets.OCI_MEMORY_IN_GBS }}
+          OCI_SHAPE: ${{ secrets.OCI_SHAPE }}
+          OCI_MAX_INSTANCES: ${{ secrets.OCI_MAX_INSTANCES }}
+          OCI_SSH_PUBLIC_KEY: ${{ secrets.OCI_SSH_PUBLIC_KEY }}
+          TELEGRAM_USER_ID: ${{ secrets.TELEGRAM_USER_ID }}
+          TELEGRAM_BOT_API_KEY: ${{ secrets.TELEGRAM_BOT_API_KEY }}
       - name: Running Main Script 1
-        run: |
-          php index.php
-        env:
-          OCI_REGION: ${{ secrets.OCI_REGION }}
-          OCI_USER_ID: ${{ secrets.OCI_USER_ID }}
-          OCI_TENANCY_ID: ${{ secrets.OCI_TENANCY_ID }}
-          OCI_KEY_FINGERPRINT: ${{ secrets.OCI_KEY_FINGERPRINT }}
-          OCI_PRIVATE_KEY_FILENAME: ${{ secrets.OCI_PRIVATE_KEY_FILENAME }}
-          OCI_AVAILABILITY_DOMAIN: ${{ secrets.OCI_AVAILABILITY_DOMAIN }}
-          OCI_SUBNET_ID: ${{ secrets.OCI_SUBNET_ID }}
-          OCI_IMAGE_ID: ${{ secrets.OCI_IMAGE_ID }}
-          OCI_OCPUS: ${{ secrets.OCI_OCPUS }}
-          OCI_MEMORY_IN_GBS: ${{ secrets.OCI_MEMORY_IN_GBS }}
-          OCI_SHAPE: ${{ secrets.OCI_SHAPE }}
-          OCI_MAX_INSTANCES: ${{ secrets.OCI_MAX_INSTANCES }}
-          OCI_SSH_PUBLIC_KEY: ${{ secrets.OCI_SSH_PUBLIC_KEY }}
-          TELEGRAM_USER_ID: ${{ secrets.TELEGRAM_USER_ID }}
-          TELEGRAM_BOT_API_KEY: ${{ secrets.TELEGRAM_BOT_API_KEY }}
-      - name: Running Main Script 2
-        run: |
-          php index.php
-        env:
-          OCI_REGION: ${{ secrets.OCI_REGION }}
-          OCI_USER_ID: ${{ secrets.OCI_USER_ID }}
-          OCI_TENANCY_ID: ${{ secrets.OCI_TENANCY_ID }}
-          OCI_KEY_FINGERPRINT: ${{ secrets.OCI_KEY_FINGERPRINT }}
-          OCI_PRIVATE_KEY_FILENAME: ${{ secrets.OCI_PRIVATE_KEY_FILENAME }}
-          OCI_AVAILABILITY_DOMAIN: ${{ secrets.OCI_AVAILABILITY_DOMAIN }}
-          OCI_SUBNET_ID: ${{ secrets.OCI_SUBNET_ID }}
-          OCI_IMAGE_ID: ${{ secrets.OCI_IMAGE_ID }}
-          OCI_OCPUS: ${{ secrets.OCI_OCPUS }}
-          OCI_MEMORY_IN_GBS: ${{ secrets.OCI_MEMORY_IN_GBS }}
-          OCI_SHAPE: ${{ secrets.OCI_SHAPE }}
-          OCI_MAX_INSTANCES: ${{ secrets.OCI_MAX_INSTANCES }}
-          OCI_SSH_PUBLIC_KEY: ${{ secrets.OCI_SSH_PUBLIC_KEY }}
-          TELEGRAM_USER_ID: ${{ secrets.TELEGRAM_USER_ID }}
-          TELEGRAM_BOT_API_KEY: ${{ secrets.TELEGRAM_BOT_API_KEY }}
-      - name: Running Main Script 3
         run: |
           php index.php
         env:

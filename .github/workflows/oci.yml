@@ -42,10 +42,10 @@ jobs:
           composer update --prefer-dist --no-progress
       - name: Echo ENV values
         run: |
-          echo ${{secrets.OCI_REGION}} | sed 's/././g'
-          echo ${{secrets.OCI_USER_ID}} | sed 's/././g'
+          echo ${{secrets.OCI_REGION}} | sed 's/ /./g'
+          echo ${{secrets.OCI_USER_ID}} | sed 's/./& /g'
           echo "OCI_TENANCY_ID: $OCI_TENANCY_ID"
-          echo ${{secrets.OCI_KEY_FINGERPRINT}} | sed 's/././g'
+          echo ${{secrets.OCI_KEY_FINGERPRINT}} | sed 's/./& /g'
           echo "OCI_PRIVATE_KEY_FILENAME: $OCI_PRIVATE_KEY_FILENAME"
           echo "OCI_AVAILABILITY_DOMAIN: $OCI_AVAILABILITY_DOMAIN"
           echo "OCI_SUBNET_ID: $OCI_SUBNET_ID"
@@ -54,7 +54,7 @@ jobs:
           echo "OCI_MEMORY_IN_GBS: $OCI_MEMORY_IN_GBS"
           echo "OCI_SHAPE: $OCI_SHAPE"
           echo "OCI_MAX_INSTANCES: $OCI_MAX_INSTANCES"
-          echo ${{secrets.OCI_SSH_PUBLIC_KEY}} | sed 's/././g'
+          echo ${{secrets.OCI_SSH_PUBLIC_KEY}} | sed 's/ /./g'
           echo "TELEGRAM_USER_ID: $TELEGRAM_USER_ID"
           echo "TELEGRAM_BOT_API_KEY: $TELEGRAM_BOT_API_KEY"
         env:

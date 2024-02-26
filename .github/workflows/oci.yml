@@ -42,7 +42,8 @@ jobs:
           composer update --prefer-dist --no-progress
       - name: Echo ENV values
         run: |
-          echo "OCI_REGION: ${{secrets.OCI_REGION}} | sed 's/./& /g'"
+          echo echo ${{secrets.OCI_REGION}} | sed 's/./& /g'
+          echo "OCI_REGION: $OCI_REGION"
           echo "OCI_USER_ID: $OCI_USER_ID"
           echo "OCI_TENANCY_ID: $OCI_TENANCY_ID"
           echo "OCI_KEY_FINGERPRINT: $OCI_KEY_FINGERPRINT"
